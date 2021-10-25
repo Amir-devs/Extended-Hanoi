@@ -1,13 +1,14 @@
 package com.example.view
 
 import javafx.geometry.Pos
+import javafx.scene.control.Label
 import tornadofx.*
 import java.util.*
 
 
 class MainView : View("Tower Of Hanoi") {
 
-    val timer = Timer()
+    var time = 0.01
 
 
 
@@ -26,15 +27,6 @@ class MainView : View("Tower Of Hanoi") {
 //        }
 //    }
 
-    // Animation
-//       var time : Double = 0.1
-//        var width = 250
-//        for ( i in 1..100 )
-//        {
-//            move(d1,width,time)
-//            width -= 2
-//            time += 0.1
-//        }
 
 
     private val d1 = label {
@@ -161,8 +153,478 @@ class MainView : View("Tower Of Hanoi") {
     var diskB = mutableListOf<Int>( 2,5,8 )
     var diskC = mutableListOf<Int>( 3,6,9 )
 
+    var counter : Int = 0
 
-    fun hanoi( disk_A: MutableList<Int> , disk_B: MutableList<Int> , disk_C: MutableList<Int> , number : Int )
+    /*
+        low = 50
+        mid = 25
+
+        1 = 95
+        2 = 375
+        3 = 655
+    */
+
+    // Animation
+//       var time : Double = 0.1
+//        var width = 250
+//        for ( i in 1..100 )
+//        {
+//            move(d1,width,time)
+//            width -= 2
+//            time += 0.1
+//        }
+
+
+    private fun move_up_animation(disk: Label, time: Double, width: Double)
+    {
+        runLater ( time.seconds ) { disk.resizeRelocate( disk.layoutX , width , 0.0 , 0.0 ) }
+    }
+
+
+    private fun move_up( disk : javafx.scene.control.Label )
+    {
+        val count = disk.layoutY - 100
+        var width = disk.layoutY
+        for ( i in 1..count.toInt() )
+        {
+            move_up_animation( disk, time, width)
+            time += 0.01
+            width -= 1
+        }
+
+//        disk.resizeRelocate( disk.layoutX , 100.0 , 0.0 , 0.0 )
+    }
+
+    private fun move_A_animation(disk: Label, time: Double, width: Double)
+    {
+        runLater ( time.seconds ) { disk.resizeRelocate( width , disk.layoutY , 0.0 , 0.0 ) }
+    }
+
+    private fun move_A( disk : javafx.scene.control.Label )
+    {
+        val count = disk.layoutX - 95
+        var width = disk.layoutX
+
+        when ( disk.text )
+        {
+            "1" -> {
+                for ( i in 1..count.toInt() )
+                {
+                    move_A_animation( disk, time, width)
+                    time += 0.01
+                    width -= 1
+                }
+            }
+            "2" -> {
+                for ( i in 1..count.toInt() )
+                {
+                    move_A_animation( disk, time, width)
+                    time += 0.01
+                    width -= 1
+                }
+            }
+            "3" -> {
+                for ( i in 1..count.toInt() )
+                {
+                    move_A_animation( disk, time, width)
+                    time += 0.01
+                    width -= 1
+                }
+            }
+            "4" -> {
+                for ( i in 1..(count-25).toInt() )
+                {
+                    move_A_animation( disk, time, width)
+                    time += 0.01
+                    width -= 1
+                }
+            }
+            "5" -> {
+                for ( i in 1..(count-25).toInt() )
+                {
+                    move_A_animation( disk, time, width)
+                    time += 0.01
+                    width -= 1
+                }
+            }
+            "6" -> {
+                for ( i in 1..(count-25).toInt() )
+                {
+                    move_A_animation( disk, time, width)
+                    time += 0.01
+                    width -= 1
+                }
+            }
+            "7" -> {
+                for ( i in 1..(count-50).toInt() )
+                {
+                    move_A_animation( disk, time, width)
+                    time += 0.01
+                    width -= 1
+                }
+            }
+            "8" -> {
+                for ( i in 1..(count-50).toInt() )
+                {
+                    move_A_animation( disk, time, width)
+                    time += 0.01
+                    width -= 1
+                }
+            }
+            "9" -> {
+                for ( i in 1..(count-50).toInt() )
+                {
+                    move_A_animation( disk, time, width)
+                    time += 0.01
+                    width -= 1
+                }
+            }
+        }
+        counter = diskA.size
+    }
+
+    private fun move_B_animation(disk: Label, time: Double, width: Double)
+    {
+        runLater ( time.seconds ) { disk.resizeRelocate( width , disk.layoutY , 0.0 , 0.0 ) }
+    }
+
+    private fun move_B( disk : javafx.scene.control.Label , origin: String)
+    {
+        var width = disk.layoutX
+
+        if ( origin == "C" )
+        {
+
+            val count = disk.layoutX - 375
+
+            when (disk.text) {
+                "1" -> {
+                    for (i in 1..count.toInt()) {
+                        move_B_animation(disk, time, width)
+                        time += 0.01
+                        width -= 1
+                    }
+                }
+                "2" -> {
+                    for (i in 1..count.toInt()) {
+                        move_B_animation(disk, time, width)
+                        time += 0.01
+                        width -= 1
+                    }
+                }
+                "3" -> {
+                    for (i in 1..count.toInt()) {
+                        move_B_animation(disk, time, width)
+                        time += 0.01
+                        width -= 1
+                    }
+                }
+                "4" -> {
+                    for (i in 1..(count - 25).toInt()) {
+                        move_B_animation(disk, time, width)
+                        time += 0.01
+                        width -= 1
+                    }
+                }
+                "5" -> {
+                    for (i in 1..(count - 25).toInt()) {
+                        move_B_animation(disk, time, width)
+                        time += 0.01
+                        width -= 1
+                    }
+                }
+                "6" -> {
+                    for (i in 1..(count - 25).toInt()) {
+                        move_B_animation(disk, time, width)
+                        time += 0.01
+                        width -= 1
+                    }
+                }
+                "7" -> {
+                    for (i in 1..(count - 50).toInt()) {
+                        move_B_animation(disk, time, width)
+                        time += 0.01
+                        width -= 1
+                    }
+                }
+                "8" -> {
+                    for (i in 1..(count - 50).toInt()) {
+                        move_B_animation(disk, time, width)
+                        time += 0.01
+                        width -= 1
+                    }
+                }
+                "9" -> {
+                    for (i in 1..(count - 50).toInt()) {
+                        move_B_animation(disk, time, width)
+                        time += 0.01
+                        width -= 1
+                    }
+                }
+            }
+        }
+
+        if ( origin == "A" )
+        {
+            val count = 375 - disk.layoutX
+
+            when ( disk.text )
+            {
+                "1" -> {
+                    for (i in 1..count.toInt()) {
+                        move_B_animation(disk, time, width)
+                        time += 0.01
+                        width += 1
+                    }
+                }
+                "2" -> {
+                    for (i in 1..count.toInt()) {
+                        move_B_animation(disk, time, width)
+                        time += 0.01
+                        width += 1
+                    }
+                }
+                "3" -> {
+                    for (i in 1..count.toInt()) {
+                        move_B_animation(disk, time, width)
+                        time += 0.01
+                        width += 1
+                    }
+                }
+                "4" -> {
+                    for (i in 1..(count + 25).toInt()) {
+                        move_B_animation(disk, time, width)
+                        time += 0.01
+                        width += 1
+                    }
+                }
+                "5" -> {
+                    for (i in 1..(count + 25).toInt()) {
+                        move_B_animation(disk, time, width)
+                        time += 0.01
+                        width += 1
+                    }
+                }
+                "6" -> {
+                    for (i in 1..(count + 25).toInt()) {
+                        move_B_animation(disk, time, width)
+                        time += 0.01
+                        width += 1
+                    }
+                }
+                "7" -> {
+                    for (i in 1..(count + 50).toInt()) {
+                        move_B_animation(disk, time, width)
+                        time += 0.01
+                        width += 1
+                    }
+                }
+                "8" -> {
+                    for (i in 1..(count + 50).toInt()) {
+                        move_B_animation(disk, time, width)
+                        time += 0.01
+                        width += 1
+                    }
+                }
+                "9" -> {
+                    for (i in 1..(count + 50).toInt()) {
+                        move_B_animation(disk, time, width)
+                        time += 0.01
+                        width += 1
+                    }
+                }
+            }
+
+
+
+
+
+        }
+
+        counter = diskB.size
+    }
+
+    private fun move_C_animation(disk: Label, time: Double, width: Double)
+    {
+        runLater ( time.seconds ) { disk.resizeRelocate( width , disk.layoutY , 0.0 , 0.0 ) }
+    }
+
+    private fun move_C( disk : javafx.scene.control.Label )
+    {
+        val count = 655 - disk.layoutX
+        var width = disk.layoutX
+
+        when ( disk.text )
+        {
+            "1" -> {
+                for ( i in 1..count.toInt() )
+                {
+                    move_C_animation( disk, time, width)
+                    time += 0.01
+                    width += 1
+                }
+            }
+            "2" -> {
+                for ( i in 1..count.toInt() )
+                {
+                    move_C_animation( disk, time, width)
+                    time += 0.01
+                    width += 1
+                }
+            }
+            "3" -> {
+                for ( i in 1..count.toInt() )
+                {
+                    move_C_animation( disk, time, width)
+                    time += 0.01
+                    width += 1
+                }
+            }
+            "4" -> {
+                for ( i in 1..(count+25).toInt() )
+                {
+                    move_C_animation( disk, time, width)
+                    time += 0.01
+                    width += 1
+                }
+            }
+            "5" -> {
+                for ( i in 1..(count+25).toInt() )
+                {
+                    move_C_animation( disk, time, width)
+                    time += 0.01
+                    width += 1
+                }
+            }
+            "6" -> {
+                for ( i in 1..(count+25).toInt() )
+                {
+                    move_C_animation( disk, time, width)
+                    time += 0.01
+                    width += 1
+                }
+            }
+            "7" -> {
+                for ( i in 1..(count+50).toInt() )
+                {
+                    move_C_animation( disk, time, width)
+                    time += 0.01
+                    width += 1
+                }
+            }
+            "8" -> {
+                for ( i in 1..(count+50).toInt() )
+                {
+                    move_C_animation( disk, time, width)
+                    time += 0.01
+                    width += 1
+                }
+            }
+            "9" -> {
+                for ( i in 1..(count+50).toInt() )
+                {
+                    move_C_animation( disk, time, width)
+                    time += 0.01
+                    width += 1
+                }
+            }
+        }
+        counter = diskC.size
+    }
+
+
+    private fun move_down_animation(disk: Label, time: Double, width: Double)
+    {
+        runLater ( time.seconds ) { disk.resizeRelocate( disk.layoutX , width , 0.0 , 0.0 ) }
+    }
+
+    private fun move_down( disk : javafx.scene.control.Label , counter : Int )
+    {
+        var count = 385.0 - (counter * 30) - 100
+        var width = 100.0
+
+        for ( i in 1..count.toInt() )
+        {
+            move_down_animation( disk , time , width )
+            time += 0.01
+            width += 1
+        }
+
+    }
+
+
+    private fun move( origin : String , target : String )
+    {
+        var disk = javafx.scene.control.Label()
+        when ( origin )
+        {
+            "A" -> {
+                if ( diskA[ diskA.size - 1] == 1 ) { disk = d1 }
+                if ( diskA[ diskA.size - 1] == 2 ) { disk = d2 }
+                if ( diskA[ diskA.size - 1] == 3 ) { disk = d3 }
+                if ( diskA[ diskA.size - 1] == 4 ) { disk = d4 }
+                if ( diskA[ diskA.size - 1] == 5 ) { disk = d5 }
+                if ( diskA[ diskA.size - 1] == 6 ) { disk = d6 }
+                if ( diskA[ diskA.size - 1] == 7 ) { disk = d7 }
+                if ( diskA[ diskA.size - 1] == 8 ) { disk = d8 }
+                if ( diskA[ diskA.size - 1] == 9 ) { disk = d9 }
+
+                move_up( disk )
+                when ( target )
+                {
+                    "B" -> move_B( disk , "A" )
+                    "C" -> move_C( disk )
+                }
+                move_down( disk , counter )
+            }
+
+            "B" -> {
+                if ( diskB[ diskB.size - 1] == 1 ) { disk = d1 }
+                if ( diskB[ diskB.size - 1] == 2 ) { disk = d2 }
+                if ( diskB[ diskB.size - 1] == 3 ) { disk = d3 }
+                if ( diskB[ diskB.size - 1] == 4 ) { disk = d4 }
+                if ( diskB[ diskB.size - 1] == 5 ) { disk = d5 }
+                if ( diskB[ diskB.size - 1] == 6 ) { disk = d6 }
+                if ( diskB[ diskB.size - 1] == 7 ) { disk = d7 }
+                if ( diskB[ diskB.size - 1] == 8 ) { disk = d8 }
+                if ( diskB[ diskB.size - 1] == 9 ) { disk = d9 }
+
+                move_up( disk )
+                when ( target )
+                {
+                    "A" -> move_A( disk )
+                    "C" -> move_C( disk )
+                }
+                move_down( disk , counter )
+            }
+
+            "C" -> {
+                if ( diskC[ diskC.size - 1] == 1 ) { disk = d1 }
+                if ( diskC[ diskC.size - 1] == 2 ) { disk = d2 }
+                if ( diskC[ diskC.size - 1] == 3 ) { disk = d3 }
+                if ( diskC[ diskC.size - 1] == 4 ) { disk = d4 }
+                if ( diskC[ diskC.size - 1] == 5 ) { disk = d5 }
+                if ( diskC[ diskC.size - 1] == 6 ) { disk = d6 }
+                if ( diskC[ diskC.size - 1] == 7 ) { disk = d7 }
+                if ( diskC[ diskC.size - 1] == 8 ) { disk = d8 }
+                if ( diskC[ diskC.size - 1] == 9 ) { disk = d9 }
+
+
+                move_up( disk )
+                when ( target )
+                {
+                    "B" -> move_B( disk , "C" )
+                    "C" -> move_C( disk )
+                }
+                move_down( disk , counter )
+            }
+
+
+        }
+
+    }
+
+    private fun hanoi(disk_A: MutableList<Int>, disk_B: MutableList<Int>, disk_C: MutableList<Int>, number : Int )
     {
         if ( number == 1 )
         {
@@ -226,6 +688,7 @@ class MainView : View("Tower Of Hanoi") {
         add(d8)
         add(d9)
 
+        move( "C" , "B" )
 
 
 

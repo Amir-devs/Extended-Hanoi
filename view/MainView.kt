@@ -539,7 +539,7 @@ class MainView : View("Tower Of Hanoi") {
 
     private fun move_down( disk : javafx.scene.control.Label , counter : Int )
     {
-        var count = 385.0 - (counter * 30) - 100
+        val count = 385.0 - (counter * 30) - 100
         var width = 100.0
 
         for ( i in 1..count.toInt() )
@@ -629,17 +629,32 @@ class MainView : View("Tower Of Hanoi") {
         if ( number == 1 )
         {
             move( origin , target )
-            disk_C.add( disk_A[ disk_A.size - 1 ] )
-            disk_A.removeAt( disk_A.size - 1 )
+            runLater (time.seconds) {
+                disk_C.add(disk_A[disk_A.size - 1])
+                disk_A.removeAt(disk_A.size - 1)
+            }
+            time += 3
+
         }
         else
         {
-            hanoi( disk_A , disk_C , disk_B , number - 1 , "A" , "B" )
+            runLater (time.seconds) {
+                hanoi(disk_A, disk_C, disk_B, number - 1, "A", "B")
+            }
+            time += 3
 
             move( origin , target )
-            disk_C.add( disk_A[ disk_A.size - 1 ] )
-            disk_A.removeAt( disk_A.size - 1 )
-            hanoi( disk_B , disk_A , disk_C, number - 1 , "B" , "C" )
+            runLater (time.seconds) {
+                disk_C.add(disk_A[disk_A.size - 1])
+                disk_A.removeAt(disk_A.size - 1)
+            }
+            time += 3
+
+            runLater (time.seconds) {
+                hanoi(disk_B, disk_A, disk_C, number - 1, "B", "C")
+            }
+            time += 3
+
         }
 
     }
@@ -647,39 +662,68 @@ class MainView : View("Tower Of Hanoi") {
     fun exHanoi( disk_A: MutableList<Int> , disk_B: MutableList<Int> , disk_C: MutableList<Int> , number : Int , origin: String , target: String )
     {
 
-
-
         if ( number == 1 )
         {
             move( origin , target )
-            disk_B.add( disk_C[ disk_C.size - 1 ] )
-            disk_C.removeAt( disk_C.size - 1 )
+            runLater (time.seconds) {
+                disk_B.add(disk_C[disk_C.size - 1])
+                disk_C.removeAt(disk_C.size - 1)
+            }
+            time += 3
 
             move( origin , target )
-            disk_C.add( disk_A[ disk_A.size - 1 ] )
-            disk_A.removeAt( disk_A.size - 1 )
+            runLater (time.seconds) {
+                disk_C.add(disk_A[disk_A.size - 1])
+                disk_A.removeAt(disk_A.size - 1)
+            }
+            time += 3
 
             move( origin , target )
-            disk_A.add( disk_B[ disk_B.size - 1 ] )
-            disk_B.removeAt( disk_B.size - 1 )
+            runLater (time.seconds) {
+                disk_A.add(disk_B[disk_B.size - 1])
+                disk_B.removeAt(disk_B.size - 1)
+            }
+            time += 3
 
             move( origin , target )
-            disk_C.add( disk_B[ disk_B.size - 1 ] )
-            disk_B.removeAt( disk_B.size - 1 )
+            runLater (time.seconds) {
+                disk_C.add(disk_B[disk_B.size - 1])
+                disk_B.removeAt(disk_B.size - 1)
+            }
+            time += 3
 
             move( origin , target )
-            disk_C.add( disk_A[ disk_A.size - 1 ] )
-            disk_A.removeAt( disk_A.size - 1 )
+            runLater (time.seconds) {
+                disk_C.add(disk_A[disk_A.size - 1])
+                disk_A.removeAt(disk_A.size - 1)
+            }
+            time += 3
+
         }
         else
         {
-            exHanoi( disk_A, disk_B, disk_C,number - 1 , "A" , "C" )
-            hanoi( disk_C, disk_A, disk_B, (3 * number) - 2 , "C" , "B" )
+            runLater (time.seconds) {
+                exHanoi(disk_A, disk_B, disk_C, number - 1, "A", "C")
+            }
+            time += 3
+
+            runLater (time.seconds) {
+                hanoi(disk_C, disk_A, disk_B, (3 * number) - 2, "C", "B")
+            }
+            time += 3
 
             move( origin , target )
-            disk_C.add( disk_A[ disk_A.size - 1 ] )
-            disk_A.removeAt( disk_A.size - 1 )
-            hanoi( disk_B, disk_A, disk_C, (3 * number) - 1 , "B" , "C" )
+            runLater (time.seconds) {
+                disk_C.add(disk_A[disk_A.size - 1])
+                disk_A.removeAt(disk_A.size - 1)
+            }
+            time += 3
+
+            runLater (time.seconds) {
+                hanoi(disk_B, disk_A, disk_C, (3 * number) - 1, "B", "C")
+            }
+            time += 3
+
         }
 
     }

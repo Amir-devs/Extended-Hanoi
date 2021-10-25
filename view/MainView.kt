@@ -192,7 +192,6 @@ class MainView : View("Tower Of Hanoi") {
             width -= 1
         }
 
-//        disk.resizeRelocate( disk.layoutX , 100.0 , 0.0 , 0.0 )
     }
 
     private fun move_A_animation(disk: Label, time: Double, width: Double)
@@ -624,45 +623,63 @@ class MainView : View("Tower Of Hanoi") {
 
     }
 
-    private fun hanoi(disk_A: MutableList<Int>, disk_B: MutableList<Int>, disk_C: MutableList<Int>, number : Int )
+    private fun hanoi(disk_A: MutableList<Int>, disk_B: MutableList<Int>, disk_C: MutableList<Int>, number : Int , origin: String , target: String )
     {
+
         if ( number == 1 )
         {
+            move( origin , target )
             disk_C.add( disk_A[ disk_A.size - 1 ] )
             disk_A.removeAt( disk_A.size - 1 )
         }
         else
         {
-            hanoi( disk_A , disk_C , disk_B , number - 1 )
+            hanoi( disk_A , disk_C , disk_B , number - 1 , "A" , "B" )
+
+            move( origin , target )
             disk_C.add( disk_A[ disk_A.size - 1 ] )
             disk_A.removeAt( disk_A.size - 1 )
-            hanoi( disk_B , disk_A , disk_C, number - 1 )
+            hanoi( disk_B , disk_A , disk_C, number - 1 , "B" , "C" )
         }
 
     }
 
-    fun exHanoi( disk_A: MutableList<Int> , disk_B: MutableList<Int> , disk_C: MutableList<Int> , number : Int )
+    fun exHanoi( disk_A: MutableList<Int> , disk_B: MutableList<Int> , disk_C: MutableList<Int> , number : Int , origin: String , target: String )
     {
+
+
+
         if ( number == 1 )
         {
+            move( origin , target )
             disk_B.add( disk_C[ disk_C.size - 1 ] )
             disk_C.removeAt( disk_C.size - 1 )
+
+            move( origin , target )
             disk_C.add( disk_A[ disk_A.size - 1 ] )
             disk_A.removeAt( disk_A.size - 1 )
+
+            move( origin , target )
             disk_A.add( disk_B[ disk_B.size - 1 ] )
             disk_B.removeAt( disk_B.size - 1 )
+
+            move( origin , target )
             disk_C.add( disk_B[ disk_B.size - 1 ] )
             disk_B.removeAt( disk_B.size - 1 )
+
+            move( origin , target )
             disk_C.add( disk_A[ disk_A.size - 1 ] )
             disk_A.removeAt( disk_A.size - 1 )
         }
         else
         {
-            exHanoi( disk_A, disk_B, disk_C,number - 1 )
-            hanoi( disk_C, disk_A, disk_B, (3 * number) - 2 )
+            exHanoi( disk_A, disk_B, disk_C,number - 1 , "A" , "C" )
+            hanoi( disk_C, disk_A, disk_B, (3 * number) - 2 , "C" , "B" )
+
+            move( origin , target )
             disk_C.add( disk_A[ disk_A.size - 1 ] )
             disk_A.removeAt( disk_A.size - 1 )
-            hanoi( disk_B, disk_A, disk_C, (3 * number) - 1 )
+            hanoi( disk_B, disk_A, disk_C, (3 * number) - 1 , "B" , "C" )
         }
 
     }
@@ -688,7 +705,7 @@ class MainView : View("Tower Of Hanoi") {
         add(d8)
         add(d9)
 
-        move( "C" , "B" )
+        exHanoi( diskA , diskB , diskC , 3 , "A" , "C" )
 
 
 

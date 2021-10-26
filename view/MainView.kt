@@ -153,6 +153,9 @@ class MainView : View("Tower Of Hanoi") {
     var diskB = mutableListOf<Int>( 2,5,8 )
     var diskC = mutableListOf<Int>( 3,6,9 )
 
+    var origin_list = mutableListOf<String>()
+    var target_list = mutableListOf<String>()
+
     var counter : Int = 0
 
     /*
@@ -558,6 +561,7 @@ class MainView : View("Tower Of Hanoi") {
         when ( origin )
         {
             "A" -> {
+
                 if ( diskA[ diskA.size - 1] == 1 ) { disk = d1 }
                 if ( diskA[ diskA.size - 1] == 2 ) { disk = d2 }
                 if ( diskA[ diskA.size - 1] == 3 ) { disk = d3 }
@@ -571,13 +575,23 @@ class MainView : View("Tower Of Hanoi") {
                 move_up( disk )
                 when ( target )
                 {
-                    "B" -> move_B( disk , "A" )
-                    "C" -> move_C( disk )
+                    "B" -> {
+                        move_B(disk, "A")
+//                        diskB.add( diskA[ diskA.size - 1 ] )
+//                        diskA.removeAt( diskA.size - 1 )
+                    }
+                    "C" -> {
+                        move_C(disk)
+//                        diskC.add( diskA[ diskA.size - 1 ] )
+//                        diskA.removeAt( diskA.size - 1 )
+                    }
                 }
+
                 move_down( disk , counter )
             }
 
             "B" -> {
+
                 if ( diskB[ diskB.size - 1] == 1 ) { disk = d1 }
                 if ( diskB[ diskB.size - 1] == 2 ) { disk = d2 }
                 if ( diskB[ diskB.size - 1] == 3 ) { disk = d3 }
@@ -591,13 +605,22 @@ class MainView : View("Tower Of Hanoi") {
                 move_up( disk )
                 when ( target )
                 {
-                    "A" -> move_A( disk )
-                    "C" -> move_C( disk )
+                    "A" -> {
+                        move_A(disk)
+//                        diskA.add( diskB[ diskB.size - 1 ] )
+//                        diskB.removeAt( diskB.size - 1 )
+                    }
+                    "C" -> {
+                        move_C(disk)
+//                        diskC.add( diskB[ diskB.size - 1 ] )
+//                        diskB.removeAt( diskB.size - 1 )
+                    }
                 }
                 move_down( disk , counter )
             }
 
             "C" -> {
+
                 if ( diskC[ diskC.size - 1] == 1 ) { disk = d1 }
                 if ( diskC[ diskC.size - 1] == 2 ) { disk = d2 }
                 if ( diskC[ diskC.size - 1] == 3 ) { disk = d3 }
@@ -612,8 +635,16 @@ class MainView : View("Tower Of Hanoi") {
                 move_up( disk )
                 when ( target )
                 {
-                    "B" -> move_B( disk , "C" )
-                    "C" -> move_C( disk )
+                    "B" -> {
+                        move_B(disk, "C")
+//                        diskB.add( diskC[ diskC.size - 1 ])
+//                        diskC.removeAt( diskC.size - 1 )
+                    }
+                    "C" -> {
+                        move_C(disk)
+//                        diskC.add( diskC[ diskC.size - 1 ])
+//                        diskC.removeAt( diskC.size - 1 )
+                    }
                 }
                 move_down( disk , counter )
             }
@@ -623,110 +654,57 @@ class MainView : View("Tower Of Hanoi") {
 
     }
 
-    private fun hanoi(disk_A: MutableList<Int>, disk_B: MutableList<Int>, disk_C: MutableList<Int>, number : Int , origin: String , target: String )
+
+    private fun hanoi( A : String , B : String , C : String , n : Int )
     {
-
-        if ( number == 1 )
+        if ( n == 1 )
         {
-            move( origin , target )
-            runLater (time.seconds) {
-                disk_C.add(disk_A[disk_A.size - 1])
-                disk_A.removeAt(disk_A.size - 1)
-            }
-            time += 3
-
+            origin_list.add(A)
+            target_list.add(C)
         }
         else
         {
-            runLater (time.seconds) {
-                hanoi(disk_A, disk_C, disk_B, number - 1, "A", "B")
-            }
-            time += 3
-
-            move( origin , target )
-            runLater (time.seconds) {
-                disk_C.add(disk_A[disk_A.size - 1])
-                disk_A.removeAt(disk_A.size - 1)
-            }
-            time += 3
-
-            runLater (time.seconds) {
-                hanoi(disk_B, disk_A, disk_C, number - 1, "B", "C")
-            }
-            time += 3
-
+            hanoi( A , C , B , n - 1 )
+            origin_list.add(A)
+            target_list.add(C)
+            hanoi( B , A , C , n - 1 )
         }
 
     }
 
-    fun exHanoi( disk_A: MutableList<Int> , disk_B: MutableList<Int> , disk_C: MutableList<Int> , number : Int , origin: String , target: String )
+    private fun exhanoi( A : String , B : String , C : String , n : Int )
     {
-
-        if ( number == 1 )
+        if ( n == 1 )
         {
-            move( origin , target )
-            runLater (time.seconds) {
-                disk_B.add(disk_C[disk_C.size - 1])
-                disk_C.removeAt(disk_C.size - 1)
-            }
-            time += 3
+            origin_list.add(C)
+            target_list.add(B)
 
-            move( origin , target )
-            runLater (time.seconds) {
-                disk_C.add(disk_A[disk_A.size - 1])
-                disk_A.removeAt(disk_A.size - 1)
-            }
-            time += 3
+            origin_list.add(A)
+            target_list.add(C)
 
-            move( origin , target )
-            runLater (time.seconds) {
-                disk_A.add(disk_B[disk_B.size - 1])
-                disk_B.removeAt(disk_B.size - 1)
-            }
-            time += 3
+            origin_list.add(B)
+            target_list.add(A)
 
-            move( origin , target )
-            runLater (time.seconds) {
-                disk_C.add(disk_B[disk_B.size - 1])
-                disk_B.removeAt(disk_B.size - 1)
-            }
-            time += 3
+            origin_list.add(B)
+            target_list.add(C)
 
-            move( origin , target )
-            runLater (time.seconds) {
-                disk_C.add(disk_A[disk_A.size - 1])
-                disk_A.removeAt(disk_A.size - 1)
-            }
-            time += 3
-
+            origin_list.add(A)
+            target_list.add(C)
         }
         else
         {
-            runLater (time.seconds) {
-                exHanoi(disk_A, disk_B, disk_C, number - 1, "A", "C")
-            }
-            time += 3
+            exhanoi( A , B , C ,n - 1 )
+            hanoi( C , A , B , (3 * n) - 2 )
 
-            runLater (time.seconds) {
-                hanoi(disk_C, disk_A, disk_B, (3 * number) - 2, "C", "B")
-            }
-            time += 3
+            origin_list.add(A)
+            target_list.add(C)
 
-            move( origin , target )
-            runLater (time.seconds) {
-                disk_C.add(disk_A[disk_A.size - 1])
-                disk_A.removeAt(disk_A.size - 1)
-            }
-            time += 3
-
-            runLater (time.seconds) {
-                hanoi(disk_B, disk_A, disk_C, (3 * number) - 1, "B", "C")
-            }
-            time += 3
-
+            hanoi( B , A , C , (3 * n) - 1 )
         }
 
     }
+
+
 
     override val root = anchorpane {
 
@@ -749,8 +727,48 @@ class MainView : View("Tower Of Hanoi") {
         add(d8)
         add(d9)
 
-        exHanoi( diskA , diskB , diskC , 3 , "A" , "C" )
+        exhanoi( "A" , "B" , "C" , 3 )
 
+        for ( i in origin_list.indices )
+        {
+            var temp = 0
+            println( origin_list[i] + " -> " + target_list[i] )
+
+
+            move( origin_list[i] , target_list[i] )
+
+            if ( origin_list[i] == "A" )
+            {
+                temp = diskA[ diskA.size - 1 ]
+                diskA.removeAt( diskA.size - 1 )
+            }
+            if ( origin_list[i] == "B" )
+            {
+                temp = diskB[ diskB.size - 1 ]
+                diskB.removeAt( diskB.size - 1 )
+            }
+            if ( origin_list[i] == "C" )
+            {
+                temp = diskC[ diskC.size - 1 ]
+                diskC.removeAt( diskC.size - 1 )
+            }
+
+            if ( target_list[i] == "A" )
+            {
+                diskA.add( temp )
+            }
+            if ( target_list[i] == "B" )
+            {
+                diskB.add( temp )
+            }
+            if ( target_list[i] == "C" )
+            {
+                diskC.add( temp )
+            }
+
+
+
+        }
 
 
     }

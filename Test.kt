@@ -6,14 +6,8 @@ fun a(lii : MutableList<String>)
     lii.removeAt(2)
 }
 
-
 fun main() {
 
-    var l = mutableListOf<String>("a","b" , "d")
-    l.add("c")
-    println(l)
 
-    a(l)
-    print(l)
 
 }

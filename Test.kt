@@ -1,13 +1,23 @@
 package com.example
 
-fun a(lii : MutableList<String>)
-{
-    lii[1] = "hi"
-    lii.removeAt(2)
-}
+import tornadofx.runLater
+import tornadofx.seconds
+
+
+
 
 fun main() {
 
+
+    for ( i in 1..100 )
+    {
+        println("hi")
+
+        if ( i ==7){
+
+           break
+        }
+    }
 
 
 }

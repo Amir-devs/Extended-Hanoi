@@ -3,12 +3,15 @@ package com.example.view
 import javafx.geometry.Pos
 import javafx.scene.control.Label
 import tornadofx.*
-import java.util.*
 
 
-class MainView : View("Tower Of Hanoi") {
+open class MainView : View("Tower Of Hanoi") {
 
     var time = 0.01
+    val delay = 0.001
+    var can_move = true
+    var index = 0
+    var clicked = 0
 
 
 
@@ -29,7 +32,7 @@ class MainView : View("Tower Of Hanoi") {
 
 
 
-    private val d1 = label {
+     val d1 = label {
         style = "-fx-background-color: #19EC22 ; -fx-background-radius: 20px"
         text = "1"
         alignment = Pos.CENTER
@@ -41,64 +44,66 @@ class MainView : View("Tower Of Hanoi") {
         style = "-fx-background-color: red ; -fx-background-radius: 20px"
         text = "2"
         alignment = Pos.CENTER
-        setPrefSize(200.0 , 25.0 )
-        resizeRelocate(375.0 , 385.0 , 0.0 , 0.0 )
+        setPrefSize(180.0 , 25.0 )
+        resizeRelocate(385.0 , 385.0 , 0.0 , 0.0 )
     }
 
     private val d3 = label {
         style = "-fx-background-color: blue ; -fx-background-radius: 20px"
         text = "3"
         alignment = Pos.CENTER
-        setPrefSize(200.0 , 25.0 )
-        resizeRelocate(655.0 , 385.0 , 0.0 , 0.0 )
+        setPrefSize(160.0 , 25.0 )
+        resizeRelocate(675.0 , 385.0 , 0.0 , 0.0 )
     }
 
     private val d4 = label {
         style = "-fx-background-color: #DEFC21 ; -fx-background-radius: 20px"
         text = "4"
         alignment = Pos.CENTER
-        setPrefSize(150.0 , 25.0 )
-        resizeRelocate(120.0 , 355.0 , 0.0 , 0.0 )
+        setPrefSize(130.0 , 25.0 )
+        resizeRelocate(130.0 , 355.0 , 0.0 , 0.0 )
     }
+
+
 
     private val d5 = label {
         style = "-fx-background-color: #28F9CD ; -fx-background-radius: 20px"
         text = "5"
         alignment = Pos.CENTER
-        setPrefSize(150.0 , 25.0 )
-        resizeRelocate(400.0 , 355.0 , 0.0 , 0.0 )
+        setPrefSize(110.0 , 25.0 )
+        resizeRelocate(420.0 , 355.0 , 0.0 , 0.0 )
     }
 
     private val d6 = label {
         style = "-fx-background-color: #BA28F9 ; -fx-background-radius: 20px"
         text = "6"
         alignment = Pos.CENTER
-        setPrefSize(150.0 , 25.0 )
-        resizeRelocate(680.0 , 355.0 , 0.0 , 0.0 )
+        setPrefSize(100.0 , 25.0 )
+        resizeRelocate(705.0 , 355.0 , 0.0 , 0.0 )
     }
 
     private val d7 = label {
         style = "-fx-background-color: #FF2222 ; -fx-background-radius: 20px"
         text = "7"
         alignment = Pos.CENTER
-        setPrefSize(100.0 , 25.0 )
-        resizeRelocate(145.0 , 325.0 , 0.0 , 0.0 )
+        setPrefSize(90.0 , 25.0 )
+        resizeRelocate(150.0 , 325.0 , 0.0 , 0.0 )
     }
 
     private val d8 = label {
         style = "-fx-background-color: #00FF55 ; -fx-background-radius: 20px"
         text = "8"
         alignment = Pos.CENTER
-        setPrefSize(100.0 , 25.0 )
-        resizeRelocate(425.0 , 325.0 , 0.0 , 0.0 )
+        setPrefSize(80.0 , 25.0 )
+        resizeRelocate(435.0 , 325.0 , 0.0 , 0.0 )
     }
 
     private val d9 = label {
         style = "-fx-background-color: #FB0291 ; -fx-background-radius: 20px"
         text = "9"
         alignment = Pos.CENTER
-        setPrefSize(100.0 , 25.0 )
-        resizeRelocate(705.0 , 325.0 , 0.0 , 0.0 )
+        setPrefSize(70.0 , 25.0 )
+        resizeRelocate(720.0 , 325.0 , 0.0 , 0.0 )
     }
 
     private val towerA = label {
@@ -191,7 +196,7 @@ class MainView : View("Tower Of Hanoi") {
         for ( i in 1..count.toInt() )
         {
             move_up_animation( disk, time, width)
-            time += 0.01
+            time += delay
             width -= 1
         }
 
@@ -202,83 +207,155 @@ class MainView : View("Tower Of Hanoi") {
         runLater ( time.seconds ) { disk.resizeRelocate( width , disk.layoutY , 0.0 , 0.0 ) }
     }
 
-    private fun move_A( disk : javafx.scene.control.Label )
+    private fun move_A(disk: Label, origin: String)
     {
-        val count = disk.layoutX - 95
+        var count = disk.layoutX - 95
         var width = disk.layoutX
 
-        when ( disk.text )
+        if ( origin == "B" )
         {
-            "1" -> {
-                for ( i in 1..count.toInt() )
-                {
-                    move_A_animation( disk, time, width)
-                    time += 0.01
-                    width -= 1
+            when ( disk.text )
+            {
+                "1" -> {
+                    for ( i in 1..count.toInt() )
+                    {
+                        move_A_animation( disk, time, width)
+                        time += delay
+                        width -= 1
+                    }
+                }
+                "2" -> {
+                    for ( i in 1..count.toInt()-10 )
+                    {
+                        move_A_animation( disk, time, width)
+                        time += delay
+                        width -= 1
+                    }
+                }
+                "3" -> {
+                    for ( i in 1..count.toInt()-20 )
+                    {
+                        move_A_animation( disk, time, width)
+                        time += delay
+                        width -= 1
+                    }
+                }
+                "4" -> {
+                    for ( i in 1..(count-25).toInt()-10 )
+                    {
+                        move_A_animation( disk, time, width)
+                        time += delay
+                        width -= 1
+                    }
+                }
+                "5" -> {
+                    for ( i in 1..(count-25).toInt()-20 )
+                    {
+                        move_A_animation( disk, time, width)
+                        time += delay
+                        width -= 1
+                    }
+                }
+                "6" -> {
+                    for ( i in 1..(count-25).toInt()-25 )
+                    {
+                        move_A_animation( disk, time, width)
+                        time += delay
+                        width -= 1
+                    }
+                }
+                "7" -> {
+                    for ( i in 1..(count-50).toInt()-5 )
+                    {
+                        move_A_animation( disk, time, width)
+                        time += delay
+                        width -= 1
+                    }
+                }
+                "8" -> {
+                    for ( i in 1..(count-50).toInt()-10 )
+                    {
+                        move_A_animation( disk, time, width)
+                        time += delay
+                        width -= 1
+                    }
+                }
+                "9" -> {
+                    for ( i in 1..(count-50).toInt()-15 )
+                    {
+                        move_A_animation( disk, time, width)
+                        time += delay
+                        width -= 1
+                    }
                 }
             }
-            "2" -> {
-                for ( i in 1..count.toInt() )
-                {
-                    move_A_animation( disk, time, width)
-                    time += 0.01
-                    width -= 1
+
+        }
+        else if ( origin == "C" ) {
+
+            when (disk.text) {
+                "1" -> {
+                    for (i in 1..count.toInt()) {
+                        move_A_animation(disk, time, width)
+                        time += delay
+                        width -= 1
+                    }
                 }
-            }
-            "3" -> {
-                for ( i in 1..count.toInt() )
-                {
-                    move_A_animation( disk, time, width)
-                    time += 0.01
-                    width -= 1
+                "2" -> {
+                    for (i in 1..count.toInt() - 10 ) {
+                        move_A_animation(disk, time, width)
+                        time += delay
+                        width -= 1
+                    }
                 }
-            }
-            "4" -> {
-                for ( i in 1..(count-25).toInt() )
-                {
-                    move_A_animation( disk, time, width)
-                    time += 0.01
-                    width -= 1
+                "3" -> {
+                    for (i in 1..count.toInt() - 20) {
+                        move_A_animation(disk, time, width)
+                        time += delay
+                        width -= 1
+                    }
                 }
-            }
-            "5" -> {
-                for ( i in 1..(count-25).toInt() )
-                {
-                    move_A_animation( disk, time, width)
-                    time += 0.01
-                    width -= 1
+                "4" -> {
+                    for (i in 1..(count - 25).toInt() - 10) {
+                        move_A_animation(disk, time, width)
+                        time += delay
+                        width -= 1
+                    }
                 }
-            }
-            "6" -> {
-                for ( i in 1..(count-25).toInt() )
-                {
-                    move_A_animation( disk, time, width)
-                    time += 0.01
-                    width -= 1
+                "5" -> {
+                    for (i in 1..(count - 25).toInt() - 20) {
+                        move_A_animation(disk, time, width)
+                        time += delay
+                        width -= 1
+                    }
                 }
-            }
-            "7" -> {
-                for ( i in 1..(count-50).toInt() )
-                {
-                    move_A_animation( disk, time, width)
-                    time += 0.01
-                    width -= 1
+                "6" -> {
+                    for (i in 1..(count - 25).toInt() - 25 ) {
+                        move_A_animation(disk, time, width)
+                        time += delay
+                        width -= 1
+                    }
                 }
-            }
-            "8" -> {
-                for ( i in 1..(count-50).toInt() )
-                {
-                    move_A_animation( disk, time, width)
-                    time += 0.01
-                    width -= 1
+                "7" -> {
+                    for (i in 1..(count - 50).toInt() - 5 ) {
+                        move_A_animation(disk, time, width)
+                        time += delay
+                        width -= 1
+                    }
                 }
-            }
-            "9" -> {
-                for ( i in 1..(count-50).toInt() )
-                {
-                    move_A_animation( disk, time, width)
-                    time += 0.01
-                    width -= 1
+                "8" -> {
+                    for (i in 1..(count - 50).toInt() - 10) {
+                        move_A_animation(disk, time, width)
+                        time += delay
+                        width -= 1
+                    }
+                }
+                "9" -> {
+                    for (i in 1..(count - 50).toInt() - 15) {
+                        move_A_animation(disk, time, width)
+                        time += delay
+                        width -= 1
+                    }
                 }
             }
         }
@@ -301,65 +378,66 @@ class MainView : View("Tower Of Hanoi") {
 
             when (disk.text) {
                 "1" -> {
-                    for (i in 1..count.toInt()) {
+                    for (i in 1..count.toInt() ) {
                         move_B_animation(disk, time, width)
-                        time += 0.01
+                        time += delay
                         width -= 1
                     }
                 }
                 "2" -> {
-                    for (i in 1..count.toInt()) {
+                    for (i in 1..count.toInt()-10 ) {
                         move_B_animation(disk, time, width)
-                        time += 0.01
+                        time += delay
+
                         width -= 1
                     }
                 }
                 "3" -> {
-                    for (i in 1..count.toInt()) {
+                    for (i in 1..count.toInt()-20 ) {
                         move_B_animation(disk, time, width)
-                        time += 0.01
+                        time += delay
                         width -= 1
                     }
                 }
                 "4" -> {
-                    for (i in 1..(count - 25).toInt()) {
+                    for (i in 1..(count - 25).toInt()-10 ) {
                         move_B_animation(disk, time, width)
-                        time += 0.01
+                        time += delay
                         width -= 1
                     }
                 }
                 "5" -> {
-                    for (i in 1..(count - 25).toInt()) {
+                    for (i in 1..(count - 25).toInt()-20) {
                         move_B_animation(disk, time, width)
-                        time += 0.01
+                        time += delay
                         width -= 1
                     }
                 }
                 "6" -> {
-                    for (i in 1..(count - 25).toInt()) {
+                    for (i in 1..(count - 25).toInt()-25 ) {
                         move_B_animation(disk, time, width)
-                        time += 0.01
+                        time += delay
                         width -= 1
                     }
                 }
                 "7" -> {
-                    for (i in 1..(count - 50).toInt()) {
+                    for (i in 1..(count - 50).toInt()-5 ) {
                         move_B_animation(disk, time, width)
-                        time += 0.01
+                        time += delay
                         width -= 1
                     }
                 }
                 "8" -> {
-                    for (i in 1..(count - 50).toInt()) {
+                    for (i in 1..(count - 50).toInt()-10 ) {
                         move_B_animation(disk, time, width)
-                        time += 0.01
+                        time += delay
                         width -= 1
                     }
                 }
                 "9" -> {
-                    for (i in 1..(count - 50).toInt()) {
+                    for (i in 1..(count - 50).toInt()-15 ) {
                         move_B_animation(disk, time, width)
-                        time += 0.01
+                        time += delay
                         width -= 1
                     }
                 }
@@ -373,71 +451,69 @@ class MainView : View("Tower Of Hanoi") {
             when ( disk.text )
             {
                 "1" -> {
-                    for (i in 1..count.toInt()) {
+                    for (i in 1..count.toInt() ) {
                         move_B_animation(disk, time, width)
-                        time += 0.01
+                        time += delay
                         width += 1
                     }
                 }
                 "2" -> {
-                    for (i in 1..count.toInt()) {
+                    for (i in 1..count.toInt()+10 ) {
                         move_B_animation(disk, time, width)
-                        time += 0.01
+                        time += delay
                         width += 1
                     }
                 }
                 "3" -> {
-                    for (i in 1..count.toInt()) {
+                    for (i in 1..count.toInt()+20 ) {
                         move_B_animation(disk, time, width)
-                        time += 0.01
+                        time += delay
                         width += 1
                     }
                 }
                 "4" -> {
-                    for (i in 1..(count + 25).toInt()) {
+                    for (i in 1..(count + 25).toInt()+10 ) {
                         move_B_animation(disk, time, width)
-                        time += 0.01
+                        time += delay
                         width += 1
                     }
                 }
                 "5" -> {
-                    for (i in 1..(count + 25).toInt()) {
+                    for (i in 1..(count + 25).toInt()+20 ) {
                         move_B_animation(disk, time, width)
-                        time += 0.01
+                        time += delay
                         width += 1
                     }
                 }
                 "6" -> {
-                    for (i in 1..(count + 25).toInt()) {
+                    for (i in 1..(count + 25).toInt()+25 ) {
                         move_B_animation(disk, time, width)
-                        time += 0.01
+                        time += delay
                         width += 1
                     }
                 }
                 "7" -> {
-                    for (i in 1..(count + 50).toInt()) {
+                    for (i in 1..(count + 50).toInt()+5 ) {
                         move_B_animation(disk, time, width)
-                        time += 0.01
+                        time += delay
                         width += 1
                     }
                 }
                 "8" -> {
-                    for (i in 1..(count + 50).toInt()) {
+                    for (i in 1..(count + 50).toInt()+10 ) {
                         move_B_animation(disk, time, width)
-                        time += 0.01
+                        time += delay
                         width += 1
                     }
                 }
                 "9" -> {
-                    for (i in 1..(count + 50).toInt()) {
+                    for (i in 1..(count + 50).toInt()+15 ) {
                         move_B_animation(disk, time, width)
-                        time += 0.01
+                        time += delay
                         width += 1
                     }
                 }
             }
-
-
 
 
 
@@ -462,71 +538,71 @@ class MainView : View("Tower Of Hanoi") {
                 for ( i in 1..count.toInt() )
                 {
                     move_C_animation( disk, time, width)
-                    time += 0.01
+                    time += delay
                     width += 1
                 }
             }
             "2" -> {
-                for ( i in 1..count.toInt() )
+                for ( i in 1..count.toInt()+10 )
                 {
                     move_C_animation( disk, time, width)
-                    time += 0.01
+                    time += delay
                     width += 1
                 }
             }
             "3" -> {
-                for ( i in 1..count.toInt() )
+                for ( i in 1..count.toInt()+20 )
                 {
                     move_C_animation( disk, time, width)
-                    time += 0.01
+                    time += delay
                     width += 1
                 }
             }
             "4" -> {
-                for ( i in 1..(count+25).toInt() )
+                for ( i in 1..(count+25).toInt()+10 )
                 {
                     move_C_animation( disk, time, width)
-                    time += 0.01
+                    time += delay
                     width += 1
                 }
             }
             "5" -> {
-                for ( i in 1..(count+25).toInt() )
+                for ( i in 1..(count+25).toInt()+20 )
                 {
                     move_C_animation( disk, time, width)
-                    time += 0.01
+                    time += delay
                     width += 1
                 }
             }
             "6" -> {
-                for ( i in 1..(count+25).toInt() )
+                for ( i in 1..(count+25).toInt()+25 )
                 {
                     move_C_animation( disk, time, width)
-                    time += 0.01
+                    time += delay
                     width += 1
                 }
             }
             "7" -> {
-                for ( i in 1..(count+50).toInt() )
+                for ( i in 1..(count+50).toInt()+5 )
                 {
                     move_C_animation( disk, time, width)
-                    time += 0.01
+                    time += delay
                     width += 1
                 }
             }
             "8" -> {
-                for ( i in 1..(count+50).toInt() )
+                for ( i in 1..(count+50).toInt()+10 )
                 {
                     move_C_animation( disk, time, width)
-                    time += 0.01
+                    time += delay
                     width += 1
                 }
             }
             "9" -> {
-                for ( i in 1..(count+50).toInt() )
+                for ( i in 1..(count+50).toInt()+15)
                 {
                     move_C_animation( disk, time, width)
-                    time += 0.01
+                    time += delay
                     width += 1
                 }
             }
@@ -548,8 +624,13 @@ class MainView : View("Tower Of Hanoi") {
         for ( i in 1..count.toInt() )
         {
             move_down_animation( disk , time , width )
-            time += 0.01
+            time += delay
             width += 1
+
+            if ( i == count.toInt() )
+            {
+                time = 0.0
+            }
         }
 
     }
@@ -572,18 +653,19 @@ class MainView : View("Tower Of Hanoi") {
                 if ( diskA[ diskA.size - 1] == 8 ) { disk = d8 }
                 if ( diskA[ diskA.size - 1] == 9 ) { disk = d9 }
 
+
                 move_up( disk )
                 when ( target )
                 {
                     "B" -> {
                         move_B(disk, "A")
-//                        diskB.add( diskA[ diskA.size - 1 ] )
-//                        diskA.removeAt( diskA.size - 1 )
+                        diskB.add( diskA[ diskA.size - 1 ] )
+                        diskA.removeAt( diskA.size - 1 )
                     }
                     "C" -> {
                         move_C(disk)
-//                        diskC.add( diskA[ diskA.size - 1 ] )
-//                        diskA.removeAt( diskA.size - 1 )
+                        diskC.add( diskA[ diskA.size - 1 ] )
+                        diskA.removeAt( diskA.size - 1 )
                     }
                 }
 
@@ -606,14 +688,14 @@ class MainView : View("Tower Of Hanoi") {
                 when ( target )
                 {
                     "A" -> {
-                        move_A(disk)
-//                        diskA.add( diskB[ diskB.size - 1 ] )
-//                        diskB.removeAt( diskB.size - 1 )
+                        move_A(disk , origin )
+                        diskA.add( diskB[ diskB.size - 1 ] )
+                        diskB.removeAt( diskB.size - 1 )
                     }
                     "C" -> {
                         move_C(disk)
-//                        diskC.add( diskB[ diskB.size - 1 ] )
-//                        diskB.removeAt( diskB.size - 1 )
+                        diskC.add( diskB[ diskB.size - 1 ] )
+                        diskB.removeAt( diskB.size - 1 )
                     }
                 }
                 move_down( disk , counter )
@@ -637,13 +719,13 @@ class MainView : View("Tower Of Hanoi") {
                 {
                     "B" -> {
                         move_B(disk, "C")
-//                        diskB.add( diskC[ diskC.size - 1 ])
-//                        diskC.removeAt( diskC.size - 1 )
+                        diskB.add( diskC[ diskC.size - 1 ])
+                        diskC.removeAt( diskC.size - 1 )
                     }
-                    "C" -> {
-                        move_C(disk)
-//                        diskC.add( diskC[ diskC.size - 1 ])
-//                        diskC.removeAt( diskC.size - 1 )
+                    "A" -> {
+                        move_A(disk, origin)
+                        diskA.add( diskC[ diskC.size - 1 ])
+                        diskC.removeAt( diskC.size - 1 )
                     }
                 }
                 move_down( disk , counter )
@@ -705,8 +787,98 @@ class MainView : View("Tower Of Hanoi") {
     }
 
 
+    fun automatic()
+    {
+        var timer = 0.0
+        val onceDo = clicked
+        for ( i in index until origin_list.size )
+        {
+            runLater ( timer.seconds )
+            {
+                if ( can_move && onceDo == clicked ) {
+                    move(origin_list[i], target_list[i])
+                    index++
+                }
+                else if ( clicked-1 == onceDo )
+                {
+                    clicked++
+                }
 
-    override val root = anchorpane {
+            }
+            timer += 0.9
+
+        }
+
+
+    }
+
+
+    fun end()
+    {
+        d1.resizeRelocate(655.0 , 385.0 , 0.0 , 0.0 )
+        d2.resizeRelocate(665.0 , 355.0 , 0.0 , 0.0 )
+        d3.resizeRelocate(675.0 , 325.0 , 0.0 , 0.0 )
+
+        d4.resizeRelocate(690.0 , 295.0 , 0.0 , 0.0 )
+        d5.resizeRelocate(700.0 , 265.0 , 0.0 , 0.0 )
+        d6.resizeRelocate(705.0 , 235.0 , 0.0 , 0.0 )
+
+        d7.resizeRelocate(710.0 , 205.0 , 0.0 , 0.0 )
+        d8.resizeRelocate(715.0 , 175.0 , 0.0 , 0.0 )
+        d9.resizeRelocate(720.0 , 145.0 , 0.0 , 0.0 )
+    }
+
+    fun restart()
+    {
+        d1.resizeRelocate(95.0 , 385.0 , 0.0 , 0.0 )
+        d2.resizeRelocate(385.0 , 385.0 , 0.0 , 0.0 )
+        d3.resizeRelocate(675.0 , 385.0 , 0.0 , 0.0 )
+        d4.resizeRelocate(130.0 , 355.0 , 0.0 , 0.0 )
+        d5.resizeRelocate(420.0 , 355.0 , 0.0 , 0.0 )
+        d6.resizeRelocate(705.0 , 355.0 , 0.0 , 0.0 )
+        d7.resizeRelocate(150.0 , 325.0 , 0.0 , 0.0 )
+        d8.resizeRelocate(435.0 , 325.0 , 0.0 , 0.0 )
+        d9.resizeRelocate(720.0 , 325.0 , 0.0 , 0.0 )
+    }
+
+    val stop_BTN = button {
+
+        text = "Pause"
+        resizeRelocate(100.0 , 100.0 , 30.0 , 10.0 )
+        action {
+            can_move = false
+        }
+    }
+
+    val resume_BTN = button {
+
+        text = "Resume"
+        resizeRelocate(200.0 , 100.0 , 30.0 , 10.0 )
+        action {
+            can_move = true
+            var timer = 0.0
+            val onceDo = clicked
+            for ( i in index until origin_list.size )
+            {
+                runLater ( timer.seconds )
+                {
+                    if ( can_move && onceDo == clicked ) {
+                        move(origin_list[i], target_list[i])
+                        index++
+                    }
+                    else if ( clicked-1 == onceDo )
+                    {
+                        clicked++
+                    }
+
+                }
+                timer += 0.9
+            }
+        }
+    }
+
+
+    override var root = anchorpane {
 
        setPrefSize(950.0 , 600.0 )
         style = "-fx-background-color: black"
@@ -726,49 +898,52 @@ class MainView : View("Tower Of Hanoi") {
         add(d7)
         add(d8)
         add(d9)
+        add(stop_BTN)
+        add(resume_BTN)
 
-        exhanoi( "A" , "B" , "C" , 3 )
-
-        for ( i in origin_list.indices )
-        {
-            var temp = 0
-            println( origin_list[i] + " -> " + target_list[i] )
-
-
-            move( origin_list[i] , target_list[i] )
-
-            if ( origin_list[i] == "A" )
-            {
-                temp = diskA[ diskA.size - 1 ]
-                diskA.removeAt( diskA.size - 1 )
-            }
-            if ( origin_list[i] == "B" )
-            {
-                temp = diskB[ diskB.size - 1 ]
-                diskB.removeAt( diskB.size - 1 )
-            }
-            if ( origin_list[i] == "C" )
-            {
-                temp = diskC[ diskC.size - 1 ]
-                diskC.removeAt( diskC.size - 1 )
-            }
-
-            if ( target_list[i] == "A" )
-            {
-                diskA.add( temp )
-            }
-            if ( target_list[i] == "B" )
-            {
-                diskB.add( temp )
-            }
-            if ( target_list[i] == "C" )
-            {
-                diskC.add( temp )
-            }
 
 
 
-        }
+        exhanoi( "A" , "B" , "C" , 3 )
+        automatic()
+
+
+
+//        var timer = 0.0
+//        for ( i in 0 until 3 )
+//        {
+//            runLater ( timer.seconds )
+//            {
+//                move("A","C")
+//            }
+//            timer += 0.9
+//        }
+//        for ( i in 0 until 3 )
+//        {
+//            runLater ( timer.seconds )
+//            {
+//                move("B","C")
+//            }
+//            timer += 0.9
+//        }
+//        for ( i in 0 until 9 )
+//        {
+//            runLater ( timer.seconds )
+//            {
+//                move("C","A")
+//            }
+//            timer += 0.9
+//        }
+
+
+//        println(origin_list.size)
+
+//        val k = 4.0
+//        runLater  ( k.seconds ) {
+//
+//            d5.resizeRelocate(100.0 , 100.0 , 0.0 , 0.0 )
+//        }
+
 
 
     }

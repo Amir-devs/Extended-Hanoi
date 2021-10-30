@@ -1,8 +1,10 @@
 package com.example.view
 
 import javafx.geometry.Pos
+import javafx.scene.control.Button
 import javafx.scene.control.Label
 import tornadofx.*
+import java.awt.Image
 
 
 open class MainView : View("Tower Of Hanoi") {
@@ -12,7 +14,6 @@ open class MainView : View("Tower Of Hanoi") {
     var can_move = true
     var index = 0
     var clicked = 0
-
 
 
 //    fun move(d: javafx.scene.control.Label , i : Int , j : Double)
@@ -31,9 +32,11 @@ open class MainView : View("Tower Of Hanoi") {
 //    }
 
 
+    private val disk_style = "-fx-background-color: #FF0070 ; -fx-background-radius: 20px ; -fx-text-fill: black"
 
-     val d1 = label {
-        style = "-fx-background-color: #19EC22 ; -fx-background-radius: 20px"
+    private val d1 = label {
+         style = disk_style
+//        style = "-fx-background-color: #19EC22 ; -fx-background-radius: 20px"
         text = "1"
         alignment = Pos.CENTER
         setPrefSize(200.0 , 25.0 )
@@ -41,7 +44,8 @@ open class MainView : View("Tower Of Hanoi") {
     }
 
     private val d2 = label {
-        style = "-fx-background-color: red ; -fx-background-radius: 20px"
+        style = disk_style
+//        style = "-fx-background-color: red ; -fx-background-radius: 20px"
         text = "2"
         alignment = Pos.CENTER
         setPrefSize(180.0 , 25.0 )
@@ -49,7 +53,8 @@ open class MainView : View("Tower Of Hanoi") {
     }
 
     private val d3 = label {
-        style = "-fx-background-color: blue ; -fx-background-radius: 20px"
+        style = disk_style
+//        style = "-fx-background-color: #02A0FF ; -fx-background-radius: 20px"
         text = "3"
         alignment = Pos.CENTER
         setPrefSize(160.0 , 25.0 )
@@ -57,17 +62,17 @@ open class MainView : View("Tower Of Hanoi") {
     }
 
     private val d4 = label {
-        style = "-fx-background-color: #DEFC21 ; -fx-background-radius: 20px"
+        style = disk_style
+//        style = "-fx-background-color: #DEFC21 ; -fx-background-radius: 20px"
         text = "4"
         alignment = Pos.CENTER
         setPrefSize(130.0 , 25.0 )
         resizeRelocate(130.0 , 355.0 , 0.0 , 0.0 )
     }
 
-
-
     private val d5 = label {
-        style = "-fx-background-color: #28F9CD ; -fx-background-radius: 20px"
+        style = disk_style
+//        style = "-fx-background-color: #28F9CD ; -fx-background-radius: 20px"
         text = "5"
         alignment = Pos.CENTER
         setPrefSize(110.0 , 25.0 )
@@ -75,7 +80,8 @@ open class MainView : View("Tower Of Hanoi") {
     }
 
     private val d6 = label {
-        style = "-fx-background-color: #BA28F9 ; -fx-background-radius: 20px"
+        style = disk_style
+//        style = "-fx-background-color: #BA28F9 ; -fx-background-radius: 20px"
         text = "6"
         alignment = Pos.CENTER
         setPrefSize(100.0 , 25.0 )
@@ -83,7 +89,8 @@ open class MainView : View("Tower Of Hanoi") {
     }
 
     private val d7 = label {
-        style = "-fx-background-color: #FF2222 ; -fx-background-radius: 20px"
+        style = disk_style
+//        style = "-fx-background-color: #FF2222 ; -fx-background-radius: 20px"
         text = "7"
         alignment = Pos.CENTER
         setPrefSize(90.0 , 25.0 )
@@ -91,7 +98,8 @@ open class MainView : View("Tower Of Hanoi") {
     }
 
     private val d8 = label {
-        style = "-fx-background-color: #00FF55 ; -fx-background-radius: 20px"
+        style = disk_style
+//        style = "-fx-background-color: #00FF55 ; -fx-background-radius: 20px"
         text = "8"
         alignment = Pos.CENTER
         setPrefSize(80.0 , 25.0 )
@@ -99,23 +107,29 @@ open class MainView : View("Tower Of Hanoi") {
     }
 
     private val d9 = label {
-        style = "-fx-background-color: #FB0291 ; -fx-background-radius: 20px"
+        style = disk_style
+//        style = "-fx-background-color: #FB0291 ; -fx-background-radius: 20px"
         text = "9"
         alignment = Pos.CENTER
         setPrefSize(70.0 , 25.0 )
         resizeRelocate(720.0 , 325.0 , 0.0 , 0.0 )
     }
 
+
+    val tower_style = "-fx-background-color:  #262323 ; -fx-background-radius: 20px ; -fx-text-fill: white ; -fx-border-color: white ; -fx-border-radius: 20px "
+    val line_style = "-fx-background-color: #262323 ; -fx-background-radius: 20px ; "
+
     private val towerA = label {
-        style = "-fx-background-color: white ; -fx-background-radius: 20px"
+
+        style = tower_style
         text = "A"
         alignment = Pos.CENTER
-        setPrefSize(250.0 , 30.0 )
+        setPrefSize(250.0 , 40.0 )
         resizeRelocate(70.0 , 420.0 , 0.0 , 0.0 )
     }
 
     private val lineA = label {
-        style = "-fx-background-color: white ; -fx-background-radius: 20px"
+        style = line_style
         alignment = Pos.CENTER
         rotate = 90.0
         setPrefSize(250.0 , 5.0 )
@@ -123,15 +137,15 @@ open class MainView : View("Tower Of Hanoi") {
     }
 
     private val towerB = label {
-        style = "-fx-background-color: white ; -fx-background-radius: 20px"
+        style = tower_style
         text = "B"
         alignment = Pos.CENTER
-        setPrefSize(250.0 , 30.0 )
+        setPrefSize(250.0 , 40.0 )
         resizeRelocate(350.0 , 420.0 , 0.0 , 0.0 )
     }
 
     private val lineB = label {
-        style = "-fx-background-color: white ; -fx-background-radius: 20px"
+        style = line_style
         alignment = Pos.CENTER
         rotate = 90.0
         setPrefSize(250.0 , 5.0 )
@@ -139,15 +153,15 @@ open class MainView : View("Tower Of Hanoi") {
     }
 
     private val towerC = label {
-        style = "-fx-background-color: white ; -fx-background-radius: 20px"
+        style = tower_style
         text = "C"
         alignment = Pos.CENTER
-        setPrefSize(250.0 , 30.0 )
+        setPrefSize(250.0 , 40.0 )
         resizeRelocate(630.0 , 420.0 , 0.0 , 0.0 )
     }
 
     private val lineC = label {
-        style = "-fx-background-color: white ; -fx-background-radius: 20px"
+        style = line_style
         alignment = Pos.CENTER
         rotate = 90.0
         setPrefSize(250.0 , 5.0 )
@@ -188,7 +202,6 @@ open class MainView : View("Tower Of Hanoi") {
         runLater ( time.seconds ) { disk.resizeRelocate( disk.layoutX , width , 0.0 , 0.0 ) }
     }
 
-
     private fun move_up( disk : javafx.scene.control.Label )
     {
         val count = disk.layoutY - 100
@@ -199,7 +212,6 @@ open class MainView : View("Tower Of Hanoi") {
             time += delay
             width -= 1
         }
-
     }
 
     private fun move_A_animation(disk: Label, time: Double, width: Double)
@@ -786,7 +798,6 @@ open class MainView : View("Tower Of Hanoi") {
 
     }
 
-
     fun automatic()
     {
         var timer = 0.0
@@ -798,20 +809,13 @@ open class MainView : View("Tower Of Hanoi") {
                 if ( can_move && onceDo == clicked ) {
                     move(origin_list[i], target_list[i])
                     index++
-                }
-                else if ( clicked-1 == onceDo )
-                {
-                    clicked++
-                }
 
+                    process.progress = (index/100.0)
+                }
             }
             timer += 0.9
-
         }
-
-
     }
-
 
     fun end()
     {
@@ -830,22 +834,103 @@ open class MainView : View("Tower Of Hanoi") {
 
     fun restart()
     {
-        d1.resizeRelocate(95.0 , 385.0 , 0.0 , 0.0 )
-        d2.resizeRelocate(385.0 , 385.0 , 0.0 , 0.0 )
-        d3.resizeRelocate(675.0 , 385.0 , 0.0 , 0.0 )
-        d4.resizeRelocate(130.0 , 355.0 , 0.0 , 0.0 )
-        d5.resizeRelocate(420.0 , 355.0 , 0.0 , 0.0 )
-        d6.resizeRelocate(705.0 , 355.0 , 0.0 , 0.0 )
-        d7.resizeRelocate(150.0 , 325.0 , 0.0 , 0.0 )
-        d8.resizeRelocate(435.0 , 325.0 , 0.0 , 0.0 )
-        d9.resizeRelocate(720.0 , 325.0 , 0.0 , 0.0 )
+        can_move = false
+        val t = 1
+        runLater ( t.seconds )
+        {
+            d1.resizeRelocate(95.0 , 385.0 , 0.0 , 0.0 )
+            d2.resizeRelocate(385.0 , 385.0 , 0.0 , 0.0 )
+            d3.resizeRelocate(675.0 , 385.0 , 0.0 , 0.0 )
+            d4.resizeRelocate(130.0 , 355.0 , 0.0 , 0.0 )
+            d5.resizeRelocate(420.0 , 355.0 , 0.0 , 0.0 )
+            d6.resizeRelocate(705.0 , 355.0 , 0.0 , 0.0 )
+            d7.resizeRelocate(150.0 , 325.0 , 0.0 , 0.0 )
+            d8.resizeRelocate(435.0 , 325.0 , 0.0 , 0.0 )
+            d9.resizeRelocate(720.0 , 325.0 , 0.0 , 0.0 )
+        }
+
+        index = 0
+        diskA = mutableListOf( 1,4,7 )
+        diskB = mutableListOf( 2,5,8 )
+        diskC = mutableListOf( 3,6,9 )
     }
 
-    val stop_BTN = button {
+    fun resume()
+    {
+        can_move = true
+        var timer = 0.0
+        val onceDo = clicked
+        for ( i in index until origin_list.size )
+        {
+            runLater ( timer.seconds )
+            {
+                if ( can_move && onceDo == clicked )
+                {
+                    move(origin_list[i], target_list[i])
+                    index++
+                }
+            }
+            timer += 0.9
+        }
+    }
+
+    fun next()
+    {
+        can_move = true
+        val onceDo = clicked
+
+        if ( can_move && onceDo == clicked )
+        {
+            move(origin_list[index], target_list[index])
+            index++
+        }
+    }
+
+    fun back()
+    {
+        can_move = true
+        val onceDo = clicked
+
+        if ( can_move && onceDo == clicked )
+        {
+            move(target_list[index-1],origin_list[index-1])
+            index--
+        }
+    }
+
+    val process = progressindicator{
+
+        style = "-fx-accent: red ; -fx-pref-width: 100.0 ; -fx-pref-height: 100.0 ; -fx-text-color: green"
+        resizeRelocate(700.0 , 50.0 , 70.0 , 10.0 )
+    }
+
+    val restart_BTN = button {
+
+        text = "Restart"
+        resizeRelocate(500.0 , 100.0 , 30.0 , 10.0 )
+        action { restart() }
+    }
+
+    val back_BTN = button {
+
+        text = "Back"
+        resizeRelocate(400.0 , 100.0 , 30.0 , 10.0 )
+        action { back() }
+    }
+
+    val next_BTN = button {
+
+        text = "Next"
+        resizeRelocate(300.0 , 100.0 , 30.0 , 10.0 )
+        action { next() }
+    }
+
+    val pause_BTN = button {
 
         text = "Pause"
         resizeRelocate(100.0 , 100.0 , 30.0 , 10.0 )
         action {
+            clicked++
             can_move = false
         }
     }
@@ -854,41 +939,21 @@ open class MainView : View("Tower Of Hanoi") {
 
         text = "Resume"
         resizeRelocate(200.0 , 100.0 , 30.0 , 10.0 )
-        action {
-            can_move = true
-            var timer = 0.0
-            val onceDo = clicked
-            for ( i in index until origin_list.size )
-            {
-                runLater ( timer.seconds )
-                {
-                    if ( can_move && onceDo == clicked ) {
-                        move(origin_list[i], target_list[i])
-                        index++
-                    }
-                    else if ( clicked-1 == onceDo )
-                    {
-                        clicked++
-                    }
-
-                }
-                timer += 0.9
-            }
-        }
+        action { resume() }
     }
-
 
     override var root = anchorpane {
 
        setPrefSize(950.0 , 600.0 )
-        style = "-fx-background-color: black"
+        style = "-fx-background-image: url('https://www.336photography.com/wp-content/uploads/2017/02/dark-background-design-wallpaper-2.jpg') ; -fx-background-position: center center"
 
-        add(towerA)
+
         add(lineA)
-        add(towerB)
         add(lineB)
-        add(towerC)
         add(lineC)
+        add(towerA)
+        add(towerB)
+        add(towerC)
         add(d1)
         add(d2)
         add(d3)
@@ -898,14 +963,18 @@ open class MainView : View("Tower Of Hanoi") {
         add(d7)
         add(d8)
         add(d9)
-        add(stop_BTN)
+        add(pause_BTN)
         add(resume_BTN)
+        add(next_BTN)
+        add(back_BTN)
+        add(restart_BTN)
+        add(process)
 
 
 
 
         exhanoi( "A" , "B" , "C" , 3 )
-        automatic()
+//        automatic()
 
 
 

@@ -819,17 +819,24 @@ open class MainView : View("Tower Of Hanoi") {
 
     fun end()
     {
-        d1.resizeRelocate(655.0 , 385.0 , 0.0 , 0.0 )
-        d2.resizeRelocate(665.0 , 355.0 , 0.0 , 0.0 )
-        d3.resizeRelocate(675.0 , 325.0 , 0.0 , 0.0 )
-
-        d4.resizeRelocate(690.0 , 295.0 , 0.0 , 0.0 )
-        d5.resizeRelocate(700.0 , 265.0 , 0.0 , 0.0 )
-        d6.resizeRelocate(705.0 , 235.0 , 0.0 , 0.0 )
-
-        d7.resizeRelocate(710.0 , 205.0 , 0.0 , 0.0 )
-        d8.resizeRelocate(715.0 , 175.0 , 0.0 , 0.0 )
-        d9.resizeRelocate(720.0 , 145.0 , 0.0 , 0.0 )
+        can_move = false
+        val t = 1
+        runLater ( t.seconds )
+        {
+            d1.resizeRelocate(655.0, 385.0, 0.0, 0.0)
+            d2.resizeRelocate(665.0, 355.0, 0.0, 0.0)
+            d3.resizeRelocate(675.0, 325.0, 0.0, 0.0)
+            d4.resizeRelocate(690.0, 295.0, 0.0, 0.0)
+            d5.resizeRelocate(700.0, 265.0, 0.0, 0.0)
+            d6.resizeRelocate(705.0, 235.0, 0.0, 0.0)
+            d7.resizeRelocate(710.0, 205.0, 0.0, 0.0)
+            d8.resizeRelocate(715.0, 175.0, 0.0, 0.0)
+            d9.resizeRelocate(720.0, 145.0, 0.0, 0.0)
+        }
+        index = origin_list.size
+        diskA = mutableListOf( )
+        diskB = mutableListOf( )
+        diskC = mutableListOf( 1,2,3,4,5,6,7,8,9 )
     }
 
     fun restart()
@@ -904,6 +911,13 @@ open class MainView : View("Tower Of Hanoi") {
         resizeRelocate(700.0 , 50.0 , 70.0 , 10.0 )
     }
 
+    val end_BTN = button {
+
+        text = "End"
+        resizeRelocate(600.0 , 100.0 , 30.0 , 10.0 )
+        action { end() }
+    }
+
     val restart_BTN = button {
 
         text = "Restart"
@@ -968,6 +982,7 @@ open class MainView : View("Tower Of Hanoi") {
         add(next_BTN)
         add(back_BTN)
         add(restart_BTN)
+        add(end_BTN)
         add(process)
 
 

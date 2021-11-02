@@ -10,11 +10,22 @@ import java.awt.Image
 open class MainView : View("Tower Of Hanoi") {
 
     var time = 0.01
-    val delay = 0.001
+
     var can_move = true
     var index = 0
     var clicked = 0
 
+    val fast_delay = 0.001
+    val fast_timer = 0.9
+
+    val normal_delay = 0.003
+    val normal_timer = 5.0
+
+    val slow_delay = 0.008
+    val slow_timer = 8.0
+
+    var delay = fast_delay
+    var timer_delay = fast_timer
 
 //    fun move(d: javafx.scene.control.Label , i : Int , j : Double)
 //    {
@@ -877,7 +888,7 @@ open class MainView : View("Tower Of Hanoi") {
                     index++
                 }
             }
-            timer += 0.9
+            timer += timer_delay
         }
     }
 
@@ -905,6 +916,9 @@ open class MainView : View("Tower Of Hanoi") {
         }
     }
 
+//    val style_BTN = "-fx-background-color: gray;-fx-text-fill: white;-fx-effect: innershadow( gaussian , rgba(0,0,0,0.7) , 20,0,0,0 );"
+    val style_BTN = "-fx-background-color: #404040;-fx-text-fill: white;-fx-effect: innershadow( gaussian , black , 20,0,0,0 ); -fx-background-radius: 20px"
+
     val process = progressindicator{
 
         style = "-fx-accent: red ; -fx-pref-width: 100.0 ; -fx-pref-height: 100.0 ; -fx-text-color: green"
@@ -913,36 +927,46 @@ open class MainView : View("Tower Of Hanoi") {
 
     val end_BTN = button {
 
+        style = style_BTN
         text = "End"
-        resizeRelocate(600.0 , 100.0 , 30.0 , 10.0 )
+        resizeRelocate(760.0 , 500.0 , 30.0 , 10.0 )
+        setPrefSize(150.0 , 50.0 )
         action { end() }
     }
 
     val restart_BTN = button {
 
+        style = style_BTN
         text = "Restart"
-        resizeRelocate(500.0 , 100.0 , 30.0 , 10.0 )
+        resizeRelocate(600.0 , 500.0 , 30.0 , 10.0 )
+        setPrefSize(150.0 , 50.0 )
         action { restart() }
     }
 
     val back_BTN = button {
 
+        style = style_BTN
         text = "Back"
-        resizeRelocate(400.0 , 100.0 , 30.0 , 10.0 )
+        resizeRelocate(390.0 , 500.0 , 30.0 , 10.0 )
+        setPrefSize(85.0 , 50.0 )
         action { back() }
     }
 
     val next_BTN = button {
 
+        style = style_BTN
         text = "Next"
-        resizeRelocate(300.0 , 100.0 , 30.0 , 10.0 )
+        resizeRelocate(480.0 , 500.0 , 30.0 , 10.0 )
+        setPrefSize(85.0 , 50.0 )
         action { next() }
     }
 
     val pause_BTN = button {
 
+        style = style_BTN
         text = "Pause"
-        resizeRelocate(100.0 , 100.0 , 30.0 , 10.0 )
+        resizeRelocate(240.0 , 500.0 , 30.0 , 10.0 )
+        setPrefSize(110.0 , 50.0 )
         action {
             clicked++
             can_move = false
@@ -951,10 +975,48 @@ open class MainView : View("Tower Of Hanoi") {
 
     val resume_BTN = button {
 
-        text = "Resume"
-        resizeRelocate(200.0 , 100.0 , 30.0 , 10.0 )
+        style = style_BTN
+        text = "Automatic"
+        resizeRelocate(70.0 , 500.0 , 70.0 , 150.0 )
+        setPrefSize(150.0 , 50.0 )
         action { resume() }
     }
+
+    val slow_BTN = button {
+
+        style = style_BTN
+        text = "Slow"
+        resizeRelocate(50.0 , 100.0 , 30.0 , 10.0 )
+        action {
+            delay = slow_delay
+            timer_delay = slow_timer
+        }
+    }
+
+    val normal_BTN = button {
+
+        style = style_BTN
+        text = "Normal"
+        resizeRelocate(70.0 , 100.0 , 30.0 , 10.0 )
+        action {
+            delay = normal_delay
+            timer_delay = normal_timer
+        }
+    }
+
+    val fast_BTN = button {
+
+        style = style_BTN
+        text = "Fast"
+        resizeRelocate(90.0 , 100.0 , 30.0 , 10.0 )
+        action {
+            delay = fast_delay
+            timer_delay = fast_timer
+        }
+    }
+
+
+
 
     override var root = anchorpane {
 
@@ -984,6 +1046,9 @@ open class MainView : View("Tower Of Hanoi") {
         add(restart_BTN)
         add(end_BTN)
         add(process)
+        add(slow_BTN)
+        add(normal_BTN)
+        add(fast_BTN)
 
 
 
@@ -991,42 +1056,6 @@ open class MainView : View("Tower Of Hanoi") {
         exhanoi( "A" , "B" , "C" , 3 )
 //        automatic()
 
-
-
-//        var timer = 0.0
-//        for ( i in 0 until 3 )
-//        {
-//            runLater ( timer.seconds )
-//            {
-//                move("A","C")
-//            }
-//            timer += 0.9
-//        }
-//        for ( i in 0 until 3 )
-//        {
-//            runLater ( timer.seconds )
-//            {
-//                move("B","C")
-//            }
-//            timer += 0.9
-//        }
-//        for ( i in 0 until 9 )
-//        {
-//            runLater ( timer.seconds )
-//            {
-//                move("C","A")
-//            }
-//            timer += 0.9
-//        }
-
-
-//        println(origin_list.size)
-
-//        val k = 4.0
-//        runLater  ( k.seconds ) {
-//
-//            d5.resizeRelocate(100.0 , 100.0 , 0.0 , 0.0 )
-//        }
 
 
 

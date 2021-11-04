@@ -1,10 +1,8 @@
 package com.example.view
 
 import javafx.geometry.Pos
-import javafx.scene.control.Button
 import javafx.scene.control.Label
 import tornadofx.*
-import java.awt.Image
 
 
 open class MainView : View("Tower Of Hanoi") {
@@ -27,6 +25,8 @@ open class MainView : View("Tower Of Hanoi") {
     var delay = fast_delay
     var timer_delay = fast_timer
 
+    var counter_of_disk = 0
+
 //    fun move(d: javafx.scene.control.Label , i : Int , j : Double)
 //    {
 //        runLater(j.seconds) {
@@ -42,8 +42,12 @@ open class MainView : View("Tower Of Hanoi") {
 //        }
 //    }
 
+    var diskA = mutableListOf<Int>(  )
+    var diskB = mutableListOf<Int>(  )
+    var diskC = mutableListOf<Int>(  )
 
-    private val disk_style = "-fx-background-color: #FF0070 ; -fx-background-radius: 20px ; -fx-text-fill: black"
+
+    private val disk_style = "-fx-background-color: #FF0070 ; -fx-background-radius: 20px ; -fx-text-fill: black ; "
 
     private val d1 = label {
          style = disk_style
@@ -128,7 +132,7 @@ open class MainView : View("Tower Of Hanoi") {
 
 
     val tower_style = "-fx-background-color:  #262323 ; -fx-background-radius: 20px ; -fx-text-fill: white ; -fx-border-color: white ; -fx-border-radius: 20px "
-    val line_style = "-fx-background-color: #262323 ; -fx-background-radius: 20px ; "
+    val line_style = "-fx-background-color: #262323 ; -fx-background-radius: 20px ;  "
 
     private val towerA = label {
 
@@ -178,10 +182,6 @@ open class MainView : View("Tower Of Hanoi") {
         setPrefSize(250.0 , 5.0 )
         resizeRelocate(630.0 , 295.0 , 0.0 , 0.0 )
     }
-
-    var diskA = mutableListOf<Int>( 1,4,7 )
-    var diskB = mutableListOf<Int>( 2,5,8 )
-    var diskC = mutableListOf<Int>( 3,6,9 )
 
     var origin_list = mutableListOf<String>()
     var target_list = mutableListOf<String>()
@@ -759,7 +759,6 @@ open class MainView : View("Tower Of Hanoi") {
 
     }
 
-
     private fun hanoi( A : String , B : String , C : String , n : Int )
     {
         if ( n == 1 )
@@ -809,7 +808,7 @@ open class MainView : View("Tower Of Hanoi") {
 
     }
 
-    fun automatic()
+    private fun automatic()
     {
         var timer = 0.0
         val onceDo = clicked
@@ -821,15 +820,16 @@ open class MainView : View("Tower Of Hanoi") {
                     move(origin_list[i], target_list[i])
                     index++
 
-                    process.progress = (index/100.0)
+                    process.progress = ( index / 435.0 )
                 }
             }
             timer += 0.9
         }
     }
 
-    fun end()
+    private fun end()
     {
+        clicked++
         can_move = false
         val t = 1
         runLater ( t.seconds )
@@ -845,13 +845,34 @@ open class MainView : View("Tower Of Hanoi") {
             d9.resizeRelocate(720.0, 145.0, 0.0, 0.0)
         }
         index = origin_list.size
-        diskA = mutableListOf( )
-        diskB = mutableListOf( )
-        diskC = mutableListOf( 1,2,3,4,5,6,7,8,9 )
+        process.progress = ((index / origin_list.size+1).toDouble() )
+
+        when ( counter_of_disk )
+        {
+            1 -> {
+                diskA = mutableListOf( 1 )
+                diskB = mutableListOf( 2 )
+                diskC = mutableListOf( 3 )
+            }
+
+            2 -> {
+                diskA = mutableListOf( 1,4 )
+                diskB = mutableListOf( 2,5 )
+                diskC = mutableListOf( 3,6 )
+            }
+
+            3 -> {
+                diskA = mutableListOf( 1,4,7 )
+                diskB = mutableListOf( 2,5,8 )
+                diskC = mutableListOf( 3,6,9 )
+            }
+        }
+
     }
 
-    fun restart()
+    private fun restart()
     {
+        clicked++
         can_move = false
         val t = 1
         runLater ( t.seconds )
@@ -868,12 +889,33 @@ open class MainView : View("Tower Of Hanoi") {
         }
 
         index = 0
-        diskA = mutableListOf( 1,4,7 )
-        diskB = mutableListOf( 2,5,8 )
-        diskC = mutableListOf( 3,6,9 )
+        process.progress = ((index / origin_list.size+1).toDouble() )
+
+        when ( counter_of_disk )
+        {
+            1 -> {
+                diskA = mutableListOf( 1 )
+                diskB = mutableListOf( 2 )
+                diskC = mutableListOf( 3 )
+            }
+
+            2 -> {
+                diskA = mutableListOf( 1,4 )
+                diskB = mutableListOf( 2,5 )
+                diskC = mutableListOf( 3,6 )
+            }
+
+            3 -> {
+                diskA = mutableListOf( 1,4,7 )
+                diskB = mutableListOf( 2,5,8 )
+                diskC = mutableListOf( 3,6,9 )
+            }
+        }
+
+
     }
 
-    fun resume()
+    private fun resume()
     {
         can_move = true
         var timer = 0.0
@@ -886,7 +928,7 @@ open class MainView : View("Tower Of Hanoi") {
                 {
                     move(origin_list[i], target_list[i])
                     index++
-                }
+                    process.progress = ((index / origin_list.size).toDouble())                }
             }
             timer += timer_delay
         }
@@ -894,6 +936,7 @@ open class MainView : View("Tower Of Hanoi") {
 
     fun next()
     {
+        clicked++
         can_move = true
         val onceDo = clicked
 
@@ -901,11 +944,13 @@ open class MainView : View("Tower Of Hanoi") {
         {
             move(origin_list[index], target_list[index])
             index++
+            process.progress = ((index / origin_list.size).toDouble() )
         }
     }
 
-    fun back()
+    private fun back()
     {
+        clicked++
         can_move = true
         val onceDo = clicked
 
@@ -913,6 +958,7 @@ open class MainView : View("Tower Of Hanoi") {
         {
             move(target_list[index-1],origin_list[index-1])
             index--
+            process.progress = ((index / origin_list.size).toDouble() )
         }
     }
 
@@ -921,8 +967,11 @@ open class MainView : View("Tower Of Hanoi") {
 
     val process = progressindicator{
 
-        style = "-fx-accent: red ; -fx-pref-width: 100.0 ; -fx-pref-height: 100.0 ; -fx-text-color: green"
-        resizeRelocate(700.0 , 50.0 , 70.0 , 10.0 )
+        style = "-fx-accent: #FF0070 ; -fx-background-color: #404040 ;-fx-text-fill: blue;-fx-effect: innershadow( gaussian , black , 20,0,0,0 ); -fx-background-radius: 20px ; "
+        resizeRelocate(800.0 , 0.0 , 70.0 , 10.0 )
+        setPrefSize(150.0 , 150.0)
+        paddingAll = 10.0
+        progress = 0 / 435.0
     }
 
     val end_BTN = button {
@@ -986,7 +1035,8 @@ open class MainView : View("Tower Of Hanoi") {
 
         style = style_BTN
         text = "Slow"
-        resizeRelocate(50.0 , 100.0 , 30.0 , 10.0 )
+        resizeRelocate(800.0 , 160.0 , 30.0 , 10.0 )
+        setPrefSize(150.0 , 30.0)
         action {
             delay = slow_delay
             timer_delay = slow_timer
@@ -997,7 +1047,8 @@ open class MainView : View("Tower Of Hanoi") {
 
         style = style_BTN
         text = "Normal"
-        resizeRelocate(70.0 , 100.0 , 30.0 , 10.0 )
+        resizeRelocate(800.0 , 193.0 , 30.0 , 10.0 )
+        setPrefSize(150.0 , 30.0)
         action {
             delay = normal_delay
             timer_delay = normal_timer
@@ -1008,21 +1059,84 @@ open class MainView : View("Tower Of Hanoi") {
 
         style = style_BTN
         text = "Fast"
-        resizeRelocate(90.0 , 100.0 , 30.0 , 10.0 )
+        resizeRelocate(800.0 , 226.0 , 30.0 , 10.0 )
+        setPrefSize(150.0 , 30.0)
         action {
-            delay = fast_delay
-            timer_delay = fast_timer
+//            delay = fast_delay
+//            timer_delay = fast_timer
+
+            this@MainView.close()
+            Test().openWindow()
         }
     }
 
+    fun create_ui( m: MainView, disk_counter: Int)
+    {
+        counter_of_disk = disk_counter
+        when ( disk_counter )
+        {
+            1 -> onedisk(m)
+            2 -> twodisk(m)
+            3 -> threedisk(m)
+        }
+    }
 
+    fun onedisk(m: MainView)
+    {
+        Test().close()
+        m.openWindow()
+        m.add(d1)
+        m.add(d2)
+        m.add(d3)
+        diskA = mutableListOf<Int>( 1 )
+        diskB = mutableListOf<Int>( 2 )
+        diskC = mutableListOf<Int>( 3 )
+        exhanoi( "A" , "B" , "C" , 1 )
+        println(origin_list.size)
+    }
+
+    fun twodisk(m: MainView)
+    {
+        Test().close()
+        m.openWindow()
+        m.add(d1)
+        m.add(d2)
+        m.add(d3)
+        m.add(d4)
+        m.add(d5)
+        m.add(d6)
+        diskA = mutableListOf<Int>( 1,4 )
+        diskB = mutableListOf<Int>( 2,5 )
+        diskC = mutableListOf<Int>( 3,6 )
+        exhanoi( "A" , "B" , "C" , 2 )
+        println(origin_list.size)
+    }
+
+    fun threedisk(m: MainView)
+    {
+        Test().close()
+        m.openWindow()
+        m.add(d1)
+        m.add(d2)
+        m.add(d3)
+        m.add(d4)
+        m.add(d5)
+        m.add(d6)
+        m.add(d7)
+        m.add(d8)
+        m.add(d9)
+        diskA = mutableListOf<Int>( 1,4,7 )
+        diskB = mutableListOf<Int>( 2,5,8 )
+        diskC = mutableListOf<Int>( 3,6,9 )
+        exhanoi( "A" , "B" , "C" , 3 )
+        println(origin_list.size)
+    }
 
 
     override var root = anchorpane {
 
-       setPrefSize(950.0 , 600.0 )
-        style = "-fx-background-image: url('https://www.336photography.com/wp-content/uploads/2017/02/dark-background-design-wallpaper-2.jpg') ; -fx-background-position: center center"
-
+        setPrefSize(950.0 , 600.0 )
+        style = "-fx-background-image: url(\"/dark_background.jpg\") "
 
         add(lineA)
         add(lineB)
@@ -1030,15 +1144,6 @@ open class MainView : View("Tower Of Hanoi") {
         add(towerA)
         add(towerB)
         add(towerC)
-        add(d1)
-        add(d2)
-        add(d3)
-        add(d4)
-        add(d5)
-        add(d6)
-        add(d7)
-        add(d8)
-        add(d9)
         add(pause_BTN)
         add(resume_BTN)
         add(next_BTN)
@@ -1049,16 +1154,6 @@ open class MainView : View("Tower Of Hanoi") {
         add(slow_BTN)
         add(normal_BTN)
         add(fast_BTN)
-
-
-
-
-        exhanoi( "A" , "B" , "C" , 3 )
-//        automatic()
-
-
-
-
     }
 
 }

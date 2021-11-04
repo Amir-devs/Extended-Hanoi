@@ -1,9 +1,14 @@
 package com.example.view
 
+import javafx.scene.image.Image
 import tornadofx.*
 
-class Test : View("hello")
+class WelcomeView : View("Hanoi")
 {
+
+    init {
+        setStageIcon( Image("/1.png"))
+    }
     var disk_counter = 0
 
 

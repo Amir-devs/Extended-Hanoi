@@ -14,7 +14,7 @@ open class MainView : View("Tower Of Hanoi") {
     var clicked = 0
 
     val fast_delay = 0.001
-    val fast_timer = 0.9
+    val fast_timer = 1.0
 
     val normal_delay = 0.003
     val normal_timer = 5.0
@@ -845,26 +845,27 @@ open class MainView : View("Tower Of Hanoi") {
             d9.resizeRelocate(720.0, 145.0, 0.0, 0.0)
         }
         index = origin_list.size
-        process.progress = ((index / origin_list.size+1).toDouble() )
+        process.progress = ( index / (origin_list.size).toDouble()  )
+
 
         when ( counter_of_disk )
         {
             1 -> {
-                diskA = mutableListOf( 1 )
-                diskB = mutableListOf( 2 )
-                diskC = mutableListOf( 3 )
+                diskA = mutableListOf( )
+                diskB = mutableListOf( )
+                diskC = mutableListOf( 1,2,3 )
             }
 
             2 -> {
-                diskA = mutableListOf( 1,4 )
-                diskB = mutableListOf( 2,5 )
-                diskC = mutableListOf( 3,6 )
+                diskA = mutableListOf( )
+                diskB = mutableListOf(  )
+                diskC = mutableListOf( 1,2,3,4,5,6 )
             }
 
             3 -> {
-                diskA = mutableListOf( 1,4,7 )
-                diskB = mutableListOf( 2,5,8 )
-                diskC = mutableListOf( 3,6,9 )
+                diskA = mutableListOf( )
+                diskB = mutableListOf( )
+                diskC = mutableListOf( 1,2,3,4,5,6,7,8,9 )
             }
         }
 
@@ -889,7 +890,7 @@ open class MainView : View("Tower Of Hanoi") {
         }
 
         index = 0
-        process.progress = ((index / origin_list.size+1).toDouble() )
+        process.progress = ( index / (origin_list.size).toDouble() )
 
         when ( counter_of_disk )
         {
@@ -928,7 +929,8 @@ open class MainView : View("Tower Of Hanoi") {
                 {
                     move(origin_list[i], target_list[i])
                     index++
-                    process.progress = ((index / origin_list.size).toDouble())                }
+                    process.progress = ( index / (origin_list.size).toDouble())
+                }
             }
             timer += timer_delay
         }
@@ -944,7 +946,7 @@ open class MainView : View("Tower Of Hanoi") {
         {
             move(origin_list[index], target_list[index])
             index++
-            process.progress = ((index / origin_list.size).toDouble() )
+            process.progress = ( index / (origin_list.size).toDouble())
         }
     }
 
@@ -958,7 +960,7 @@ open class MainView : View("Tower Of Hanoi") {
         {
             move(target_list[index-1],origin_list[index-1])
             index--
-            process.progress = ((index / origin_list.size).toDouble() )
+            process.progress = (( index / (origin_list.size).toDouble() ) )
         }
     }
 
@@ -1066,7 +1068,7 @@ open class MainView : View("Tower Of Hanoi") {
 //            timer_delay = fast_timer
 
             this@MainView.close()
-            Test().openWindow()
+            WelcomeView().openWindow()
         }
     }
 
@@ -1083,7 +1085,7 @@ open class MainView : View("Tower Of Hanoi") {
 
     fun onedisk(m: MainView)
     {
-        Test().close()
+        WelcomeView().close()
         m.openWindow()
         m.add(d1)
         m.add(d2)
@@ -1097,7 +1099,7 @@ open class MainView : View("Tower Of Hanoi") {
 
     fun twodisk(m: MainView)
     {
-        Test().close()
+        WelcomeView().close()
         m.openWindow()
         m.add(d1)
         m.add(d2)
@@ -1114,7 +1116,7 @@ open class MainView : View("Tower Of Hanoi") {
 
     fun threedisk(m: MainView)
     {
-        Test().close()
+        WelcomeView().close()
         m.openWindow()
         m.add(d1)
         m.add(d2)

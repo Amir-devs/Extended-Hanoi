@@ -27,6 +27,7 @@ open class MainView : View("Tower Of Hanoi") {
 
     var counter_of_disk = 0
 
+
 //    fun move(d: javafx.scene.control.Label , i : Int , j : Double)
 //    {
 //        runLater(j.seconds) {
@@ -973,7 +974,7 @@ open class MainView : View("Tower Of Hanoi") {
         resizeRelocate(800.0 , 0.0 , 70.0 , 10.0 )
         setPrefSize(150.0 , 150.0)
         paddingAll = 10.0
-        progress = 0 / 435.0
+        progress = 0.0
     }
 
     val end_BTN = button {
@@ -1064,12 +1065,53 @@ open class MainView : View("Tower Of Hanoi") {
         resizeRelocate(800.0 , 226.0 , 30.0 , 10.0 )
         setPrefSize(150.0 , 30.0)
         action {
-//            delay = fast_delay
-//            timer_delay = fast_timer
+            delay = fast_delay
+            timer_delay = fast_timer
 
-            this@MainView.close()
-            WelcomeView().openWindow()
+//            this@MainView.close()
+//            WelcomeView().openWindow()
         }
+    }
+
+    var all_step = label {
+
+        style = "-fx-font-size: 30px ; -fx-font-family: \"Times New Roman\", Times, serif; -fx-text-fill: white "
+        text = "all steps :"
+        resizeRelocate(10.0 , 10.0 , 30.0 , 10.0 )
+        setPrefSize(150.0 , 30.0)
+    }
+
+    var all_step2 = label {
+
+        style = "-fx-font-size: 25px ; -fx-text-fill: white "
+        text = " "
+        resizeRelocate(145.0 , 12.0 , 30.0 , 10.0 )
+        setPrefSize(150.0 , 30.0)
+    }
+
+    var your_step = label {
+
+        style = "-fx-font-size: 30px ; -fx-font-family: \"Times New Roman\", Times, serif; -fx-text-fill: white "
+        text = "your step : "
+        resizeRelocate(10.0 , 40.0 , 30.0 , 10.0 )
+        setPrefSize(150.0 , 30.0)
+    }
+
+    var your_step2 = textfield {
+
+        style = "-fx-font-size: 15px ; -fx-background-color: #404040;-fx-text-fill: white;-fx-effect: innershadow( gaussian , black , 20,0,0,0 ); -fx-background-radius: 20px"
+        text = ""
+        resizeRelocate(155.0 , 45.0 , 30.0 , 10.0 )
+        setPrefSize(70.0 , 30.0)
+    }
+
+    var go_BTN = button {
+
+        style = "-fx-font-size: 15px ; -fx-background-color: #404040;-fx-text-fill: white;-fx-effect: innershadow( gaussian , black , 20,0,0,0 ); -fx-background-radius: 20px"
+        text = "Go"
+        resizeRelocate(10.0 , 80.0 , 30.0 , 10.0 )
+        setPrefSize(215.0 , 30.0)
+        action {  }
     }
 
     fun create_ui( m: MainView, disk_counter: Int)
@@ -1081,6 +1123,14 @@ open class MainView : View("Tower Of Hanoi") {
             2 -> twodisk(m)
             3 -> threedisk(m)
         }
+
+//        m.add(all_step)
+//        all_step2.text = origin_list.size.toString()
+//        m.add(all_step2)
+//        m.add(your_step)
+//        your_step2.text = index.toString()
+//        m.add(your_step2)
+//        m.add(go_BTN)
     }
 
     fun onedisk(m: MainView)

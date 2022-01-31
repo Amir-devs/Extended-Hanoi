@@ -28,20 +28,6 @@ open class MainView : View("Tower Of Hanoi") {
     var counter_of_disk = 0
 
 
-//    fun move(d: javafx.scene.control.Label , i : Int , j : Double)
-//    {
-//        runLater(j.seconds) {
-//            d.resizeRelocate(70.0, i.toDouble(), 0.0, 0.0)
-//        }
-//    }
-
-//    // Rotate
-//    timeline {
-//        keyframe(Duration.seconds(3.0)) {
-//            keyvalue(d1.rotateProperty(),90.0)
-//            keyvalue(d1.rotateProperty(),360.0)
-//        }
-//    }
 
     var diskA = mutableListOf<Int>(  )
     var diskB = mutableListOf<Int>(  )
@@ -188,25 +174,6 @@ open class MainView : View("Tower Of Hanoi") {
     var target_list = mutableListOf<String>()
 
     var counter : Int = 0
-
-    /*
-        low = 50
-        mid = 25
-
-        1 = 95
-        2 = 375
-        3 = 655
-    */
-
-    // Animation
-//       var time : Double = 0.1
-//        var width = 250
-//        for ( i in 1..100 )
-//        {
-//            move(d1,width,time)
-//            width -= 2
-//            time += 0.1
-//        }
 
 
     private fun move_up_animation(disk: Label, time: Double, width: Double)
@@ -634,7 +601,6 @@ open class MainView : View("Tower Of Hanoi") {
         counter = diskC.size
     }
 
-
     private fun move_down_animation(disk: Label, time: Double, width: Double)
     {
         runLater ( time.seconds ) { disk.resizeRelocate( disk.layoutX , width , 0.0 , 0.0 ) }
@@ -658,7 +624,6 @@ open class MainView : View("Tower Of Hanoi") {
         }
 
     }
-
 
     private fun move( origin : String , target : String )
     {
@@ -1123,14 +1088,7 @@ open class MainView : View("Tower Of Hanoi") {
             2 -> twodisk(m)
             3 -> threedisk(m)
         }
-
-//        m.add(all_step)
-//        all_step2.text = origin_list.size.toString()
-//        m.add(all_step2)
-//        m.add(your_step)
-//        your_step2.text = index.toString()
-//        m.add(your_step2)
-//        m.add(go_BTN)
+        
     }
 
     fun onedisk(m: MainView)
@@ -1181,7 +1139,6 @@ open class MainView : View("Tower Of Hanoi") {
         diskB = mutableListOf<Int>( 2,5,8 )
         diskC = mutableListOf<Int>( 3,6,9 )
         exhanoi( "A" , "B" , "C" , 3 )
-        println(origin_list.size)
     }
 
 
